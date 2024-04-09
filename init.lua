@@ -1,6 +1,3 @@
--- disable netrw at the very start of your init.lua
-vim.g.loaded_newtr = 1
-vim.g.loaded_netrwPlugin = 1
 
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
@@ -12,6 +9,7 @@ require('settings')
 require('plugins')
 require('remap')
 require('lsp')
+require('tree')
 
 --colorscheme  = catppuccin
 vim.cmd.colorscheme "catppuccin-frappe"
