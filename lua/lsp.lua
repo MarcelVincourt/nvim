@@ -42,18 +42,29 @@ cmp.setup({
     {name = 'buffer'}
   },
   mapping = {
-    ['<C-y>'] = cmp.mapping.confirm({select = false}),
+    -- start showing or stop showing
+    ['<C-Space>'] = cmp.mapping(function()
+        if cmp.visible() then
+            cmp.abort()
+        else
+            cmp.complete()
+        end
+    end),
+
+
+    ['<CR>'] = cmp.mapping.confirm({select = false}),
+
+
+    --['<C-y>'] = cmp.mapping.confirm({select = false}),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<Up>'] = cmp.mapping.select_prev_item({behavior = 'select'}),
-    ['<Down>'] = cmp.mapping.select_next_item({behavior = 'select'}),
-    ['<C-p>'] = cmp.mapping(function()
+    ['<C-k>'] = cmp.mapping(function()
       if cmp.visible() then
         cmp.select_prev_item({behavior = 'insert'})
       else
         cmp.complete()
       end
     end),
-    ['<C-n>'] = cmp.mapping(function()
+    ['<C-j>'] = cmp.mapping(function()
       if cmp.visible() then
         cmp.select_next_item({behavior = 'insert'})
       else
