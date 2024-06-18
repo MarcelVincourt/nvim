@@ -12,3 +12,4 @@ vim.opt.wrap = false
 vim.opt.colorcolumn = "80"
 
 vim.o.mouse=a
+vim.opt.clipboard = 'unnamedplus'
