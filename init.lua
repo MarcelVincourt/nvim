@@ -2,6 +2,9 @@
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
+-- empty setup using defaults
+require("nvim-tree").setup()
+
 
 require('settings')
 require('plugins')
@@ -9,8 +12,6 @@ require('remap')
 require('lsp')
 require('tree')
 
--- empty setup using defaults
-require("nvim-tree").setup()
 
 vim.lsp.set_log_level("off")
 
