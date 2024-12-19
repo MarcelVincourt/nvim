@@ -37,6 +37,17 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- c: Automatically format comments when wrapping text.
+-- r: Automatically insert the comment leader on pressing Enter.
+-- o: Automatically insert the comment leader when opening a new line.
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*", -- Apply to all files; adjust the pattern as needed
+    callback = function()
+        vim.opt.formatoptions:remove({ "c", "r", "o" })
+    end,
+})
+
+
 vim.opt.list = true
 vim.opt.listchars = "tab:›-,trail:·,extends:»,precedes:«,nbsp:·"
 
