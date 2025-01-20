@@ -42,6 +42,14 @@ require('mason-lspconfig').setup({
 --	on_attach = on_attach
 --})
 
+require('lspconfig').clangd.setup({
+    on_attach = on_attach,
+    cmd = {
+        "clangd",
+        "--query-driver=/home/marcel/SimplicityStudio_v5/developer/toolchains/gnu_arm/12.2.rel1_2023.7/bin/arm-none-eabi-gcc"
+    }
+})
+
 local cmp = require('cmp')
 
 cmp.setup({
