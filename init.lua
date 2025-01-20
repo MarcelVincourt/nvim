@@ -15,3 +15,4 @@ vim.lsp.set_log_level("off")
 
 --colorscheme  = catppuccin
 vim.cmd.colorscheme "catppuccin-frappe"
+
