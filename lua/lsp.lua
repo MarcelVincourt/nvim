@@ -1,6 +1,5 @@
 local lsp = require('lsp-zero')
 
-
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
@@ -24,6 +23,7 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set('n', '<space>wa', function() vim.lsp.buf.add_workspace_folder() end, opts)
   vim.keymap.set('n', '<space>wr', function() vim.lsp.buf.remove_workspace_folder() end, opts)
   vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
+
 end)
 
 -- to learn how to use mason.nvim with lsp-zero
@@ -43,11 +43,38 @@ require('mason-lspconfig').setup({
 --})
 
 require('lspconfig').clangd.setup({
-    on_attach = on_attach,
     cmd = {
         "clangd",
-        "--query-driver=/home/marcel/SimplicityStudio_v5/developer/toolchains/gnu_arm/12.2.rel1_2023.7/bin/arm-none-eabi-gcc"
-    }
+        "--query-driver=/home/marcel/SimplicityStudio_v5/developer/toolchains/gnu_arm/12.2.rel1_2023.7/bin/arm-none-eabi-gcc",
+    },
+    on_attach = function(client, bufnr)
+    -- 🔧 Only for clangd: format on save
+    if client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ async = false })
+        end,
+      })
+    end
+
+    -- 🔧 Only for clangd: symlink .clang-format if missing
+    local function ensure_clang_format(root_dir)
+      local root_config = root_dir .. '/.clang-format'
+      local alt_config = root_dir .. '/clang/.clang-format'
+
+      if vim.fn.filereadable(root_config) == 0 and vim.fn.filereadable(alt_config) == 1 then
+        os.execute(string.format('ln -sf %s %s', alt_config, root_config))
+      end
+    end
+
+    ensure_clang_format(client.config.root_dir)
+
+    -- ✅ Also call your shared `on_attach` to get global keymaps
+    if on_attach then
+      on_attach(client, bufnr)
+    end
+  end,
 })
 
 local cmp = require('cmp')

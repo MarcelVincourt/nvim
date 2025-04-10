@@ -4,9 +4,8 @@ vim.g.loaded_netrwPlugin = 1
 
 -- empty setup using defaults
 require("nvim-tree").setup({
-    filters = {
-        dotfiles = true
-    },
+    filters = {dotfiles = true},
+    view = {width = 50},
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
